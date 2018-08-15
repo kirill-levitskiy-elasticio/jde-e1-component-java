@@ -1,90 +1,50 @@
 {
-  "title": "Petstore API (Java)",
-  "description": "elastic.io component for the Petstore API",
-  "docsUrl": "https://github.com/elasticio/petstore-component-java",
+  "title": "JD Edwards EnterpriseOne",
+  "description": "elastic.io component for the JD Edwards EnterpriseOne",
+  "docsUrl": "https://github.com/elasticio/jde-e1-component-java",
   "credentials": {
     "fields": {
-      "apiKey": {
-        "label": "API key",
+      "server": {
+        "label": "Server",
         "required": true,
         "viewClass": "TextFieldWithNoteView",
-        "note": "Please use <b>elasticio</b> as API key. For more details see <a href='https://petstore.elastic.io/docs/' target='_blank'>Petstore API docs</a>."
+        "note": "Please, provide server."
+      },
+      "port": {
+        "label": "Port",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide server port."
+      },
+      "user": {
+        "label": "User",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide username."
+      },
+      "password": {
+        "label": "Password",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide password."
+      },
+      "function": {
+        "label": "Function",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide function."
       }
     },
-    "verifier": "io.elastic.petstore.ApiKeyVerifier"
-  },
-  "triggers": {
-    "getPetsByStatus": {
-      "main": "io.elastic.petstore.triggers.GetPetsByStatus",
-      "type": "polling",
-      "title": "Get Pets By Status (HttpClient)",
-      "description": "Retrieves pets from the Petstore API by given pet status using Apache HttpClient",
-      "fields": {
-        "status": {
-          "label": "Pet Status",
-          "required": true,
-          "viewClass": "SelectView",
-          "model": {
-            "available": "Available",
-            "pending": "Pending",
-            "sold": "Sold"
-          },
-          "prompt": "Select Pet Status"
-        }
-      },
-      "metadata": {
-        "out": "./schemas/getPetsByStatus.out.json"
-      }
-    },
-    "getPetsByStatusJaxRs": {
-      "main": "io.elastic.petstore.triggers.GetPetsByStatusJaxRs",
-      "type": "polling",
-      "title": "Get Pets By Status (JAX-RS)",
-      "description": "Retrieves pets from the Petstore API by given pet status using Java API for RESTful Web Services (JAX-RS)",
-      "fields": {
-        "status": {
-          "label": "Pet Status",
-          "required": true,
-          "viewClass": "SelectView",
-          "model": {
-            "available": "Available",
-            "pending": "Pending",
-            "sold": "Sold"
-          },
-          "prompt": "Select Pet Status"
-        }
-      },
-      "metadata": {
-        "out": "./schemas/getPetsByStatus.out.json"
-      }
-    },
-    "getPetsByStatusWithDynamicSelectModel": {
-      "main": "io.elastic.petstore.triggers.GetPetsByStatus",
-      "type": "polling",
-      "title": "Get Pets By Status With Dynamic Select Model",
-      "description": "Retrieves pets from the Petstore API by given pet status. The available statuses are retrieved from the Petstore API dynamically.",
-      "fields": {
-        "status": {
-          "label": "Pet Status",
-          "required": true,
-          "viewClass": "SelectView",
-          "model": "io.elastic.petstore.providers.PetStatusModelProvider",
-          "prompt": "Select Pet Status"
-        }
-      },
-      "metadata": {
-        "out": "./schemas/getPetsByStatus.out.json"
-      }
-    }
+    "verifier": "io.elastic.jdee1.CredentialsVerifier"
   },
   "actions": {
-    "createPet": {
-      "main": "io.elastic.petstore.actions.CreatePet",
-      "title": "Create a Pet",
-      "description": "Creates a new Pet",
+    "getFuncList": {
+      "main": "io.elastic.jdee1.actions.GetFuncList",
+      "title": "Get list of functions",
+      "description": "Gets list of available functions of JD Edwards EnterpriseOne instance",
       "metadata": {
-        "in": "./schemas/createPet.in.json",
-        "out": "./schemas/createPet.out.json"
+        "in": "./schemas/getFuncList.in.json",
+        "out": "./schemas/getFuncList.out.json"
       }
     }
   }
