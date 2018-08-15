@@ -5,14 +5,10 @@ import io.elastic.api.Message;
 import io.elastic.api.Module;
 import io.elastic.jdee1.Utils;
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.json.JsonObject;
-import javax.json.JsonString;
-
-import com.jdedwards.system.xml.XMLRequest;
 
 /**
  * Action to create a pet.

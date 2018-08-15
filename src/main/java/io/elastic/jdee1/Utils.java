@@ -1,6 +1,6 @@
 package io.elastic.jdee1;
 
-import java.awt.event.ActionEvent;
+import com.jdedwards.system.xml.XMLRequest;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -23,7 +23,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import com.jdedwards.system.xml.XMLRequest;
 
 public class Utils {
 
