@@ -31,7 +31,7 @@ public class Utils {
   private Document XMLDoc;
   private Document XMLResponseDoc;
   private Document XMLServer;
-  
+
   private static final String CFG_USER = "user";
   private static final String CFG_PASSWORD = "password";
   private static final String CFG_ENV = "environment";
@@ -116,7 +116,8 @@ public class Utils {
     return response;
   }
 
-  private String executeXMLRequest(final JsonObject config, Node node) throws UnsupportedEncodingException, IOException {
+  private String executeXMLRequest(final JsonObject config, Node node)
+      throws UnsupportedEncodingException, IOException {
     String request = convertXMLDocumentToString(node);
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
@@ -207,7 +208,7 @@ public class Utils {
   private void clearBSFNModel() {
     int j = BSFNParmsModel.getRowCount();
 
-    for(int i = 0; i < j; ++i) {
+    for (int i = 0; i < j; ++i) {
       BSFNParmsModel.removeRow(0);
     }
   }
