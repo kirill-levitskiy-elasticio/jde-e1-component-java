@@ -43,8 +43,8 @@
       "title": "Get list of functions",
       "description": "Gets list of available functions of JD Edwards EnterpriseOne instance",
       "metadata": {
-        "in": "./schemas/getFuncList.in.json",
-        "out": "./schemas/getFuncList.out.json"
+        "in": "schemas/getFuncList.in.json",
+        "out": "schemas/getFuncList.out.json"
       }
     }
   }
