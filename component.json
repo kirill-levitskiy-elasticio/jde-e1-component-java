@@ -35,7 +35,7 @@
         "note": "Please, provide function."
       }
     },
-    "verifier": "io.elastic.jdee1.CredentialsVerifier"
+    "verifier": "io.elastic.jdee1.JdeCredentialsVerifier"
   },
   "actions": {
     "getFuncList": {
