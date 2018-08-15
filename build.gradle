@@ -1,17 +1,10 @@
-import java.sql.Wrapper
-
-plugins {
-    id 'java'
-}
-
+group 'io.elastic.jdee1'
+version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'java-library-distribution'
-
-group 'io.elastic.jdee1'
-version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.5
 targetCompatibility = 1.8
