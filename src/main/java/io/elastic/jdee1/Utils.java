@@ -122,8 +122,7 @@ public class Utils {
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
     //jtaRequestDocument.setText(request);
-    XMLRequest xml = new XMLRequest(server,
-        Integer.parseInt(port), request);
+    XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
     String response = xml.execute();
     //jtaResponseDocument.setText(response);
     return response;
