@@ -25,6 +25,11 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+
+    compile files("Base_JAR.jar")
+    compile files("JdeNet_JAR.jar")
+    compile files("ManagementAgent_JAR.jar")
+    compile files("System_JAR.jar")
 }
 
 uploadArchives {
