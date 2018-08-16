@@ -43,7 +43,7 @@
       "title": "Execute Function",
       "description": "Execute Function with parameters",
       "fields": {
-        "function": {
+        "name": {
           "viewClass": "TextFieldWithNoteView",
           "label": "Function",
           "required": true,
