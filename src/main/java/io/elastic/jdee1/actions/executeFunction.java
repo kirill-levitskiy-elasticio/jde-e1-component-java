@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create a pet.
  */
-public class GetFuncList implements Module {
-    private static final Logger logger = LoggerFactory.getLogger(GetFuncList.class);
+public class executeFunction implements Module {
+    private static final Logger logger = LoggerFactory.getLogger(executeFunction.class);
 
     /**
      * Executes the actions's logic by sending a request to the Petstore API and emitting response to the platform.

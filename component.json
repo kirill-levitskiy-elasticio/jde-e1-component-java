@@ -27,15 +27,21 @@
         "required": true,
         "viewClass": "TextFieldWithNoteView",
         "note": "Please, provide password."
+      },
+      "function": {
+        "label": "Function",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide any existing function name for validating connection"
       }
     },
     "verifier": "io.elastic.jdee1.JdeCredentialsVerifier"
   },
   "actions": {
-    "getFuncList": {
-      "main": "io.elastic.jdee1.actions.GetFuncList",
-      "title": "Get list of functions",
-      "description": "Gets list of available functions of JD Edwards EnterpriseOne instance",
+    "executeFunction": {
+      "main": "io.elastic.jdee1.actions.executeFunction",
+      "title": "Execute Function",
+      "description": "Execute Function with parameters",
       "fields": {
         "function": {
           "viewClass": "TextFieldWithNoteView",

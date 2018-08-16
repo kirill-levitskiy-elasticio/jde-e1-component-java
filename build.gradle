@@ -29,6 +29,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
 }
 
 uploadArchives {
