@@ -42,6 +42,7 @@ public class FunctionParamsProvider implements DynamicMetadataProvider, SelectMo
   public JsonObject getColumns(JsonObject configuration) {
 
     JsonObjectBuilder properties = Json.createObjectBuilder();
+    JsonObjectBuilder field = Json.createObjectBuilder();
     Utils utils = new Utils();
     utils.getTemplate_actionPerformed(configuration);
 
@@ -51,9 +52,15 @@ public class FunctionParamsProvider implements DynamicMetadataProvider, SelectMo
       String value = (String)utils.BSFNParmsModel.getValueAt(i, 1);
       if (value.compareTo("") != 0) {
         utils.setParameterValue(ret, i);
+        
+        String type = "string";
+        field.add("title", ret)
+            .add("type", type);
+
         properties.add(ret, "string");
       }
     }
+
     return properties.build();
   }
 
