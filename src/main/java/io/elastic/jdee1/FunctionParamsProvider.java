@@ -31,6 +31,7 @@ public class FunctionParamsProvider implements DynamicMetadataProvider, SelectMo
   public JsonObject getMetaModel(JsonObject configuration) {
     JsonObject result = Json.createObjectBuilder().build();
     JsonObject inMetadata = Json.createObjectBuilder().build();
+    logger.info("configuration: {}", configuration);
     JsonObject properties = getColumns(configuration);
     inMetadata = Json.createObjectBuilder().add("type", "object")
         .add("properties", properties).build();
