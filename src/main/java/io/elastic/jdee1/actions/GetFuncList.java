@@ -57,6 +57,7 @@ public class GetFuncList implements Module {
 
         final JsonObjectBuilder result = Json.createObjectBuilder();
         result.add("result", jdeinstance.getTemplate_actionPerformed(configuration));
+        jdeinstance.jbExecute_actionPerformed(configuration);
 
         logger.info("Emitting data");
 

@@ -16,11 +16,6 @@
       "required": true,
       "title": "Environment"
     },
-    "sessionid": {
-      "type": "string",
-      "required": true,
-      "title": "Session ID"
-    },
     "function": {
       "type": "string",
       "required": true,

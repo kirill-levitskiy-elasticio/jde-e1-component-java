@@ -23,8 +23,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Utils {
+
+  private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
   private DefaultTableModel BSFNParmsModel;
   private Document XMLDoc;
@@ -34,13 +38,14 @@ public class Utils {
   private static final String CFG_USER = "user";
   private static final String CFG_PASSWORD = "password";
   private static final String CFG_ENV = "environment";
-  private static final String CFG_SESSION_ID = "sessionid";
   private static final String CFG_FUNCTION = "function";
   private static final String CFG_SERVER = "server";
   private static final String CFG_PORT = "port";
 
+  private String session = "";
   private Boolean executed = false;
   private String lastFunction = "";
+  private String returnCode = "";
   private String errors = "";
 
   private String getSessionIDFromXMLDocument(Document doc) {
@@ -96,7 +101,7 @@ public class Utils {
         String ret = getReturnCodeFromXMLDocument(XMLDoc);
         if (ret.compareTo("99") == 0) {
           errors = "Failed to retrieve template\n";
-          ShowTemplateErrorMessage(XMLDoc);
+          showTemplateErrorMessage(XMLDoc);
         } else {
           NodeList parms = XMLDoc.getElementsByTagName("param");
 
@@ -120,10 +125,10 @@ public class Utils {
     String request = convertXMLDocumentToString(node);
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
-    //jtaRequestDocument.setText(request);
+    logger.info("Request: ", request);
     XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
     String response = xml.execute();
-    //jtaResponseDocument.setText(response);
+    logger.info("Response: ", response);
     return response;
   }
 
@@ -134,8 +139,6 @@ public class Utils {
     final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
     final String environment = getRequiredNonEmptyString(config, CFG_ENV,
         "Environment is required");
-    final String sessionid = getRequiredNonEmptyString(config, CFG_SESSION_ID,
-        "Session ID is required");
     final String function = getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
     DocumentBuilder Builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     Document Doc = Builder.newDocument();
@@ -144,7 +147,7 @@ public class Utils {
     element.setAttribute("user", user);
     element.setAttribute("pwd", password);
     element.setAttribute("environment", environment);
-    element.setAttribute("session", sessionid);
+    element.setAttribute("session", session);
     Doc.appendChild(element);
     Element element2 = Doc.createElement("callMethodTemplate");
     element2.setAttribute("app", "");
@@ -211,7 +214,7 @@ public class Utils {
     }
   }
 
-  private void ShowTemplateErrorMessage(Document doc) {
+  private void showTemplateErrorMessage(Document doc) {
     String ret = null;
 
     try {
@@ -223,6 +226,135 @@ public class Utils {
     }
 
     errors = ret;
+  }
+
+  public void jbExecute_actionPerformed(JsonObject config) {
+    errors = "";
+
+    String ret;
+    for(int i = 0; i < BSFNParmsModel.getRowCount(); ++i) {
+      ret = (String)BSFNParmsModel.getValueAt(i, 0);
+      String value = (String)BSFNParmsModel.getValueAt(i, 1);
+      if (value.compareTo("") != 0) {
+        setParameterValue(value, i);
+      }
+    }
+
+    setCredentialsInXMLDocument(config);
+    String response = null;
+
+    try {
+      response = executeXMLRequest(config, XMLDoc);
+    } catch (IOException var13) {
+      errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      return;
+    }
+
+    try {
+      XMLResponseDoc = convertStringToXMLDocument(response);
+    } catch (Exception var12) {
+      errors = "Failed to Execute XMLRequest for function call.\n" + var12.toString();
+      var12.printStackTrace();
+      return;
+    }
+
+    ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
+    returnCode = ret;
+
+    session = getSessionIDFromXMLDocument(XMLResponseDoc);
+
+    NodeList parms = XMLResponseDoc.getElementsByTagName("param");
+
+    for(int i = 0; i < parms.getLength(); ++i) {
+      Node node = parms.item(i);
+      NamedNodeMap attributes = node.getAttributes();
+      Node x = attributes.getNamedItem("name");
+      String parmname = x.getNodeValue();
+      Node textNode = null;
+      if ((textNode = node.getFirstChild()) != null) {
+        int index = getParameterIndexByName(parmname);
+        if (index != -1) {
+          BSFNParmsModel.setValueAt(textNode.getNodeValue(), index, 2);
+        }
+      }
+    }
+
+    displayBSFNErrors(XMLResponseDoc);
+  }
+
+  private void setParameterValue(String value, int index) {
+    NodeList parms = XMLDoc.getElementsByTagName("param");
+    Node node = parms.item(index);
+    Node textNode = null;
+    if ((textNode = node.getFirstChild()) == null) {
+      textNode = XMLDoc.createTextNode(value);
+      node.appendChild((Node)textNode);
+    }
+
+    if (textNode != null) {
+      ((Node)textNode).setNodeValue(value);
+    }
+
+  }
+
+  private void setCredentialsInXMLDocument(JsonObject config) {
+    NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
+    Node request = requestlist.item(0);
+    final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
+    final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
+    final String environment = getRequiredNonEmptyString(config, CFG_ENV,
+        "Environment is required");
+
+    try {
+      NamedNodeMap attributes = request.getAttributes();
+      Node att = attributes.getNamedItem("user");
+      att.setNodeValue(user);
+      att = attributes.getNamedItem("pwd");
+      att.setNodeValue(password);
+      att = attributes.getNamedItem("environment");
+      att.setNodeValue(environment);
+      att = attributes.getNamedItem("session");
+      att.setNodeValue(session);
+    } catch (Exception var6) {
+      var6.printStackTrace();
+    }
+
+  }
+
+  private int getParameterIndexByName(String parmname) {
+    for(int i = 0; i < this.BSFNParmsModel.getRowCount(); ++i) {
+      String parm = null;
+      parm = (String)this.BSFNParmsModel.getValueAt(i, 0);
+      if (parm.compareTo(parmname) == 0) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  private void displayBSFNErrors(Document doc) {
+    String codestring = "";
+    String message = "";
+
+    try {
+      NodeList errorlist = doc.getElementsByTagName("error");
+
+      for(int i = 0; i < errorlist.getLength(); ++i) {
+        Node error = errorlist.item(i);
+        NamedNodeMap attributes = error.getAttributes();
+        Node code = attributes.getNamedItem("code");
+        if (code != null) {
+          codestring = code.getNodeValue();
+        }
+
+        message = error.getFirstChild().getNodeValue();
+        errors += codestring + " - " + message + "\n";
+      }
+    } catch (Exception var9) {
+      errors += "Failed to get error";
+    }
+
   }
 
 }
