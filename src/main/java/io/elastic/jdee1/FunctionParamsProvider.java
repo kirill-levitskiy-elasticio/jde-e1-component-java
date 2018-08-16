@@ -50,15 +50,15 @@ public class FunctionParamsProvider implements DynamicMetadataProvider, SelectMo
     for(int i = 0; i < utils.BSFNParmsModel.getRowCount(); ++i) {
       ret = (String)utils.BSFNParmsModel.getValueAt(i, 0);
       String value = (String)utils.BSFNParmsModel.getValueAt(i, 1);
-      if (value.compareTo("") != 0) {
-        utils.setParameterValue(ret, i);
-        
+      //if (value.compareTo("") != 0) {
+      //  utils.setParameterValue(ret, i);
+
         String type = "string";
         field.add("title", ret)
             .add("type", type);
 
         properties.add(ret, "string");
-      }
+      //}
     }
 
     return properties.build();
