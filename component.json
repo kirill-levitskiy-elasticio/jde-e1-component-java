@@ -28,6 +28,12 @@
         "viewClass": "TextFieldWithNoteView",
         "note": "Please, provide password."
       },
+      "environment": {
+        "label": "Environment",
+        "required": true,
+        "viewClass": "TextFieldWithNoteView",
+        "note": "Please, provide environment value."
+      },
       "function": {
         "label": "Function",
         "required": true,
