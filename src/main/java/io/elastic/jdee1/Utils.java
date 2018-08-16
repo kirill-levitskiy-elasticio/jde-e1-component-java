@@ -30,7 +30,7 @@ public class Utils {
 
   private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
-  private DefaultTableModel BSFNParmsModel;
+  public DefaultTableModel BSFNParmsModel;
   private Document XMLDoc;
   private Document XMLResponseDoc;
   private Document XMLServer;
@@ -42,11 +42,11 @@ public class Utils {
   private static final String CFG_SERVER = "server";
   private static final String CFG_PORT = "port";
 
-  private String session = "";
-  private Boolean executed = false;
-  private String lastFunction = "";
-  private String returnCode = "";
-  private String errors = "";
+  public String session = "";
+  public Boolean executed = false;
+  public String lastFunction = "";
+  public String returnCode = "";
+  public String errors = "";
 
   private String getSessionIDFromXMLDocument(Document doc) {
     String ret = null;
@@ -282,7 +282,7 @@ public class Utils {
     displayBSFNErrors(XMLResponseDoc);
   }
 
-  private void setParameterValue(String value, int index) {
+  public void setParameterValue(String value, int index) {
     NodeList parms = XMLDoc.getElementsByTagName("param");
     Node node = parms.item(index);
     Node textNode = null;

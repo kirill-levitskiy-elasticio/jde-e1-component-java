@@ -27,12 +27,6 @@
         "required": true,
         "viewClass": "TextFieldWithNoteView",
         "note": "Please, provide password."
-      },
-      "function": {
-        "label": "Function",
-        "required": true,
-        "viewClass": "TextFieldWithNoteView",
-        "note": "Please, provide function."
       }
     },
     "verifier": "io.elastic.jdee1.JdeCredentialsVerifier"
@@ -42,10 +36,15 @@
       "main": "io.elastic.jdee1.actions.GetFuncList",
       "title": "Get list of functions",
       "description": "Gets list of available functions of JD Edwards EnterpriseOne instance",
-      "metadata": {
-        "in": "./schemas/getFuncList.in.json",
-        "out": "./schemas/getFuncList.out.json"
-      }
+      "fields": {
+        "function": {
+          "viewClass": "TextFieldWithNoteView",
+          "label": "Function",
+          "required": true,
+          "note": "Please, provide name of function"
+        }
+      },
+      "dynamicMetadata": "io.elastic.jdee1.FunctionParamsProvider"
     }
   }
 }

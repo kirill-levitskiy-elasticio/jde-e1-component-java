@@ -1,35 +1,10 @@
 {
   "type": "object",
   "properties": {
-    "user": {
-      "type": "string",
-      "required": true,
-      "title": "User"
-    },
-    "password": {
-      "type": "string",
-      "required": true,
-      "title": "Password"
-    },
-    "environment": {
-      "type": "string",
-      "required": true,
-      "title": "Environment"
-    },
     "function": {
       "type": "string",
       "required": true,
       "title": "Function"
-    },
-    "server": {
-      "type": "string",
-      "required": true,
-      "title": "Server"
-    },
-    "port": {
-      "type": "number",
-      "required": true,
-      "title": "Port"
     }
   }
 }
