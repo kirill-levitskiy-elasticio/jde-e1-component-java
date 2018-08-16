@@ -37,7 +37,7 @@ public class Utils {
   private Document XMLServer;
 
   private static final String CFG_USER = "user";
-  private static final String CFG_PASSWORD = "pwd";
+  private static final String CFG_PASSWORD = "password";
   private static final String CFG_ENV = "environment";
   private static final String CFG_FUNCTION = "name";
   private static final String CFG_SERVER = "server";
@@ -265,7 +265,6 @@ public class Utils {
   private Node createTemplateRequestXMLDocument(final JsonObject config)
       throws ParserConfigurationException {
     Node node = null;
-    logger.info("config: {}", config);
     final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
     final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
     final String environment = getRequiredNonEmptyString(config, CFG_ENV,
