@@ -54,10 +54,9 @@ public class FunctionParamsProvider implements DynamicMetadataProvider, SelectMo
       //  utils.setParameterValue(ret, i);
 
         String type = "string";
-        field.add("title", ret)
-            .add("type", type);
+        field.add("title", ret).add("type", type);
 
-        properties.add(ret, "string");
+        properties.add(ret, field.build());
       //}
     }
 
