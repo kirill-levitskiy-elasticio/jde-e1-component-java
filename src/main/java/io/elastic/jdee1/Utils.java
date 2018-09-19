@@ -40,7 +40,7 @@ public class Utils {
   private static final String CFG_USER = "user";
   private static final String CFG_PASSWORD = "password";
   private static final String CFG_ENV = "environment";
-  private static final String CFG_FUNCTION = "name";
+  private static final String CFG_FUNCTION = "function";
   private static final String CFG_SERVER = "server";
   private static final String CFG_PORT = "port";
 
