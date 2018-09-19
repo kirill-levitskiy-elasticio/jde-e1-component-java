@@ -21,6 +21,7 @@ public class JdeCredentialsVerifier implements CredentialsVerifier {
 
     try {
       result.add("result", jdeinstance.getTemplate_actionPerformed(configuration));
+      logger.info("Result: {}", result);
     } catch (Exception e) {
       throw new InvalidCredentialsException("Failed to connect to instance", e);
     } finally {
@@ -30,7 +31,6 @@ public class JdeCredentialsVerifier implements CredentialsVerifier {
         logger.error("Failed to closed connection");
       }
     }
-    logger.info("Result: {}", result);
   }
 
 }
