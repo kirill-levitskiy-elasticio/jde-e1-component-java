@@ -18,19 +18,19 @@ public class JdeCredentialsVerifier implements CredentialsVerifier {
 
     Utils jdeinstance = new Utils();
     final JsonObjectBuilder result = Json.createObjectBuilder();
-/*
+
     try {
       result.add("result", jdeinstance.getTemplate_actionPerformed(configuration));
     } catch (Exception e) {
       throw new InvalidCredentialsException("Failed to connect to instance", e);
     } finally {
       if (result != null) {
-        logger.info("Closing database connection");
+        logger.info("Closing connection");
       } else {
-        logger.error("Failed to closed database connection");
+        logger.error("Failed to closed connection");
       }
     }
-    */
+    logger.info("Result: {}", result);
   }
 
 }
