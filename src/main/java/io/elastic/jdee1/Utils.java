@@ -271,7 +271,7 @@ public class Utils {
     final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
     final String environment = getRequiredNonEmptyString(config, CFG_ENV,
         "Environment is required");
-    final String function = getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
+    final String function = "AddressBookMasterMBF";//getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
     DocumentBuilder Builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     Document Doc = Builder.newDocument();
     Element element = Doc.createElement("jdeRequest");
