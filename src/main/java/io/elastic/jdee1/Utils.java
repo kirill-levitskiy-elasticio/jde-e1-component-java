@@ -75,7 +75,7 @@ public class Utils {
     JsonObjectBuilder field = Json.createObjectBuilder();
     executed = false;
     String response = "";
-    final String function = "AddressBookMasterMBF";//getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
+    final String function = "AddressBookMasterMBF"; //getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
     if (function.compareTo("") != 0) {
       if (function.compareTo(lastFunction) == 0) {
         executed = true;
