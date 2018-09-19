@@ -1,5 +1,6 @@
 package io.elastic.jdee1;
 
+import com.jdedwards.system.xml.XMLRequest;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -143,8 +144,9 @@ public class Utils {
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
     logger.info("Request: {}", request);
-    //XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
-    String response = createTemplateResponseXMLDocument(config);//xml.execute();
+    XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
+    //String response = createTemplateResponseXMLDocument(config);
+    String response = xml.execute();
     logger.info("Response: {}", response);
     return response;
   }
