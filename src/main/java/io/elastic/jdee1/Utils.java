@@ -430,6 +430,7 @@ public class Utils {
   }
 
   private void setCredentialsInXMLDocument(JsonObject config) {
+    logger.info("XML: {}", XMLDoc);
     NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
     Node request = requestlist.item(0);
     final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
