@@ -21,6 +21,9 @@ dependencies {
     compile files("lib/JdeNet_JAR.jar")
     compile files("lib/ManagementAgent_JAR.jar")
     compile files("lib/System_JAR.jar")
+    compile files("lib/commons-httpclient-3.0.jar")
+    compile files("lib/commons-logging.jar")
+    compile files("lib/log4j.jar")
 
     compile "io.elastic:sailor-jvm:2.1.0"
     compile "org.glassfish.jersey.core:jersey-client:2.25.1"
