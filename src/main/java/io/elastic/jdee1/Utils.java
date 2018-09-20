@@ -85,7 +85,7 @@ public class Utils {
         //clearBSFNModel();
         errors = "";
         Node node = null;
-
+        logger.info("config: {}", config.toString());
         try {
           node = createTemplateRequestXMLDocument(config);
         } catch (ParserConfigurationException var12) {
