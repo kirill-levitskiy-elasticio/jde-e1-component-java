@@ -70,7 +70,7 @@ public class Utils {
     return ret;
   }
 
-  public String getTemplate_actionPerformed(final JsonObject config) {
+  public JsonObject getTemplate_actionPerformed(final JsonObject config) {
     JsonObjectBuilder properties = Json.createObjectBuilder();
     JsonObjectBuilder field = Json.createObjectBuilder();
     executed = false;
@@ -90,7 +90,7 @@ public class Utils {
         } catch (ParserConfigurationException var12) {
           errors = "Failed to create XML document for get template.\n" + var12.toString();
           logger.info("Error: {}", errors);
-          return errors;
+          return properties.build();
         }
 
         try {
@@ -98,7 +98,7 @@ public class Utils {
         } catch (Exception var11) {
           errors = "Failed to Execute XML request for get template.\n" + var11.toString();
           logger.info("Error: {}", errors);
-          return errors;
+          return properties.build();
         }
 
         try {
@@ -106,7 +106,7 @@ public class Utils {
         } catch (Exception var10) {
           errors = "Failed to convert response to XML document.\n" + var10.toString();
           logger.info("Error: {}", errors);
-          return errors;
+          return properties.build();
         }
 
         String ret = getReturnCodeFromXMLDocument(XMLDoc);
@@ -135,7 +135,7 @@ public class Utils {
         }
       }
     }
-    return response;
+    return properties.build();
   }
 
   private String executeXMLRequest(final JsonObject config, Node node)
@@ -360,7 +360,7 @@ public class Utils {
     errors = ret;
   }
 
-  public String jbExecute_actionPerformed(JsonObject config) {
+  public void jbExecute_actionPerformed(JsonObject config) {
     errors = "";
 
     String ret;
@@ -379,7 +379,7 @@ public class Utils {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
-      return errors;
+      return;
     }
 
     try {
@@ -387,7 +387,7 @@ public class Utils {
     } catch (Exception var12) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var12.toString();
       var12.printStackTrace();
-      return errors;
+      return;
     }
 
     ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
@@ -412,8 +412,6 @@ public class Utils {
     }
 
     displayBSFNErrors(XMLResponseDoc);
-
-    return response;
   }
 
   public void setParameterValue(String value, int index) {
