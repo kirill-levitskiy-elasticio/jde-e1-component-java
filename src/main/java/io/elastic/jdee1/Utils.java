@@ -431,13 +431,13 @@ public class Utils {
 
   private void setCredentialsInXMLDocument(JsonObject config) {
     logger.info("XML: {}", XMLDoc);
-    NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
-    Node request = requestlist.item(0);
+    //NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
+    //Node request = requestlist.item(0);
     final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
     final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
     final String environment = getRequiredNonEmptyString(config, CFG_ENV,
         "Environment is required");
-
+/*
     try {
       NamedNodeMap attributes = request.getAttributes();
       Node att = attributes.getNamedItem("user");
@@ -451,7 +451,7 @@ public class Utils {
     } catch (Exception var6) {
       var6.printStackTrace();
     }
-
+*/
   }
 
   private int getParameterIndexByName(String parmname) {
