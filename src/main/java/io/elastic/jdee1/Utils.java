@@ -394,7 +394,7 @@ public class Utils {
     returnCode = ret;
 
     session = getSessionIDFromXMLDocument(XMLResponseDoc);
-
+    logger.info("Session: {}", session);
     NodeList parms = XMLResponseDoc.getElementsByTagName("param");
 
     for(int i = 0; i < parms.getLength(); ++i) {
