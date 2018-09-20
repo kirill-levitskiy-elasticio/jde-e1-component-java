@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -373,17 +374,17 @@ public class Utils {
         setParameterValue(value, i);
       }
     }
-
+    logger.info("config: {}", config.toString());
     setCredentialsInXMLDocument(config);
     String response = null;
-
+    logger.info("XMLDoc: {}", documentToString(XMLDoc));
     try {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
       return;
     }
-
+    logger.info("response3: {}", response);
     try {
       XMLResponseDoc = convertStringToXMLDocument(response);
     } catch (Exception var12) {
@@ -391,7 +392,7 @@ public class Utils {
       var12.printStackTrace();
       return;
     }
-
+    logger.info("XMLResponseDoc: {}", documentToString(XMLResponseDoc));
     ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
     returnCode = ret;
 
@@ -490,6 +491,23 @@ public class Utils {
       errors += "Failed to get error";
     }
 
+  }
+
+  public static String documentToString(Document doc) {
+    try {
+      StringWriter sw = new StringWriter();
+      TransformerFactory tf = TransformerFactory.newInstance();
+      Transformer transformer = tf.newTransformer();
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+      transformer.transform(new DOMSource(doc), new StreamResult(sw));
+      return sw.toString();
+    } catch (Exception ex) {
+      throw new RuntimeException("Error converting to String", ex);
+    }
   }
 
 }
