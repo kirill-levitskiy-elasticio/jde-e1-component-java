@@ -360,7 +360,7 @@ public class Utils {
     errors = ret;
   }
 
-  public void jbExecute_actionPerformed(JsonObject config) {
+  public String jbExecute_actionPerformed(JsonObject config) {
     errors = "";
 
     String ret;
@@ -379,7 +379,7 @@ public class Utils {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
-      return;
+      return errors;
     }
 
     try {
@@ -387,7 +387,7 @@ public class Utils {
     } catch (Exception var12) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var12.toString();
       var12.printStackTrace();
-      return;
+      return errors;
     }
 
     ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
@@ -412,6 +412,8 @@ public class Utils {
     }
 
     displayBSFNErrors(XMLResponseDoc);
+
+    return response;
   }
 
   public void setParameterValue(String value, int index) {
