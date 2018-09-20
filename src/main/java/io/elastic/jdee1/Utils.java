@@ -76,6 +76,7 @@ public class Utils {
     executed = false;
     String response = "";
     final String function = "AddressBookMasterMBF"; //getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
+    logger.info("lastFunction: {}, function: {}", lastFunction, function);
     if (function.compareTo("") != 0) {
       if (function.compareTo(lastFunction) == 0) {
         executed = true;
@@ -92,7 +93,7 @@ public class Utils {
           logger.info("Error: {}", errors);
           return properties.build();
         }
-
+        logger.info("node: {}", node.toString());
         try {
           response = executeXMLRequest(config, node);
         } catch (Exception var11) {
@@ -100,7 +101,7 @@ public class Utils {
           logger.info("Error: {}", errors);
           return properties.build();
         }
-
+        logger.info("response: {}", response);
         try {
           XMLDoc = convertStringToXMLDocument(response);
         } catch (Exception var10) {
