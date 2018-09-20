@@ -88,12 +88,13 @@ public class Utils {
         logger.info("config: {}", config.toString());
         try {
           node = createTemplateRequestXMLDocument(config);
+          logger.info("node1: {}", convertXMLDocumentToString(node));
         } catch (ParserConfigurationException var12) {
           errors = "Failed to create XML document for get template.\n" + var12.toString();
           logger.info("Error: {}", errors);
           return properties.build();
         }
-        logger.info("node: {}", node.toString());
+        logger.info("node2: {}", convertXMLDocumentToString(node));
         try {
           response = executeXMLRequest(config, node);
         } catch (Exception var11) {
