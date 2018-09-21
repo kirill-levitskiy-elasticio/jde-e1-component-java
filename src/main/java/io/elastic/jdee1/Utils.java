@@ -454,10 +454,12 @@ public class Utils {
 
   public void setParameterValue(String key, String value) {
     NodeList parms = XMLDoc.getElementsByTagName("param");
-
+    logger.info("XMLDoc: {}", convertXMLDocumentToString(XMLDoc));
     for (int i = 0, len = parms.getLength(); i < len; i++) {
       Element elm = (Element)parms.item(i);
+      logger.info("elm.getAttribute(\"name\"): {}", elm.getAttribute("name"));
       if (elm.getAttribute("name").contains(value)) {
+        logger.info("contains: true");
         Node node = parms.item(i);
         Node textNode = null;
         if ((textNode = node.getFirstChild()) == null) {
