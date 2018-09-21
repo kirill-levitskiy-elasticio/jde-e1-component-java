@@ -458,7 +458,7 @@ public class Utils {
     for (int i = 0, len = parms.getLength(); i < len; i++) {
       Element elm = (Element)parms.item(i);
       logger.info("elm.getAttribute(\"name\"): {}", elm.getAttribute("name"));
-      if (elm.getAttribute("name").contains(value)) {
+      if (elm.getAttribute("name").contains(key)) {
         logger.info("contains: true");
         Node node = parms.item(i);
         Node textNode = null;
