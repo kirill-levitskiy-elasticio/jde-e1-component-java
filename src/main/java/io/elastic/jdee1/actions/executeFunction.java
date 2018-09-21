@@ -4,11 +4,14 @@ import io.elastic.api.ExecutionParameters;
 import io.elastic.api.Message;
 import io.elastic.api.Module;
 import io.elastic.jdee1.Utils;
+import java.io.IOException;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 /**
  * Action to create a pet.
@@ -57,7 +60,15 @@ public class executeFunction implements Module {
 
         final JsonObjectBuilder result = Json.createObjectBuilder();
         //jdeinstance.getTemplate_actionPerformed(configuration);
-        jdeinstance.jbExecute_actionPerformed(configuration);
+        try {
+            jdeinstance.jbExecute_actionPerformed(configuration);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
         result.add("result", jdeinstance.getTemplate_actionPerformed(configuration));
 
 
