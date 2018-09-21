@@ -370,6 +370,8 @@ public class Utils {
     JsonObjectBuilder properties = Json.createObjectBuilder();
     JsonObjectBuilder field = Json.createObjectBuilder();
 
+    getTemplate_actionPerformed(config);
+
     for(int i = 0; i < BSFNParmsModel.getRowCount(); ++i) {
       ret = (String)BSFNParmsModel.getValueAt(i, 0);
       String value = (String)BSFNParmsModel.getValueAt(i, 1);
