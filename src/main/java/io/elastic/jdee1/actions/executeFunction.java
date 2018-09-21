@@ -70,7 +70,15 @@ public class executeFunction implements Module {
             e.printStackTrace();
         }
         result.add("result", jdeinstance.getTemplate_actionPerformed(configuration));
-
+        try {
+            jdeinstance.jbExecute_actionPerformed(configuration);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
 
         logger.info("Emitting data");
 
