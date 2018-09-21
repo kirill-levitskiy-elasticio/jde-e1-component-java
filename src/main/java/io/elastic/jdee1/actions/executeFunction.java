@@ -39,7 +39,7 @@ public class executeFunction implements Module {
         Utils jdeinstance = new Utils();
 
         final JsonObjectBuilder result = Json.createObjectBuilder();
-        //jdeinstance.getTemplate_actionPerformed(configuration);
+
         try {
             jdeinstance.jbExecute_actionPerformed(configuration, body);
         } catch (ParserConfigurationException e) {
@@ -49,7 +49,9 @@ public class executeFunction implements Module {
         } catch (SAXException e) {
             e.printStackTrace();
         }
+
         jdeinstance.getTemplate_actionPerformed(configuration);
+
         try {
             result.add("result", jdeinstance.jbExecute_actionPerformed(configuration, body));
         } catch (ParserConfigurationException e) {

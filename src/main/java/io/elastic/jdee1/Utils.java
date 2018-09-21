@@ -392,7 +392,7 @@ public class Utils {
 
     for (Map.Entry<String, JsonValue> entry : body.entrySet()) {
       if (entry.getValue().toString().compareTo("") != 0) {
-        setParameterValue(entry.getValue().toString(), indexParam++);
+        setParameterValue(entry.getKey().toString(), entry.getValue().toString());
       }
     }
 
@@ -452,17 +452,23 @@ public class Utils {
     return properties.build();
   }
 
-  public void setParameterValue(String value, int index) {
+  public void setParameterValue(String key, String value) {
     NodeList parms = XMLDoc.getElementsByTagName("param");
-    Node node = parms.item(index);
-    Node textNode = null;
-    if ((textNode = node.getFirstChild()) == null) {
-      textNode = XMLDoc.createTextNode(value);
-      node.appendChild((Node)textNode);
-    }
 
-    if (textNode != null) {
-      ((Node)textNode).setNodeValue(value);
+    for (int i = 0, len = parms.getLength(); i < len; i++) {
+      Element elm = (Element)parms.item(i);
+      if (elm.getAttribute("name").contains(value)) {
+        Node node = parms.item(i);
+        Node textNode = null;
+        if ((textNode = node.getFirstChild()) == null) {
+          textNode = XMLDoc.createTextNode(value);
+          node.appendChild((Node)textNode);
+        }
+
+        if (textNode != null) {
+          ((Node)textNode).setNodeValue(value);
+        }
+      }
     }
   }
 
