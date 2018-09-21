@@ -93,6 +93,7 @@ public class Utils {
         } catch (ParserConfigurationException var12) {
           errors = "Failed to create XML document for get template.\n" + var12.toString();
           logger.info("Error: {}", errors);
+          properties.add("error", errors);
           return properties.build();
         }
         logger.info("node2: {}", convertXMLDocumentToString(node));
@@ -101,6 +102,7 @@ public class Utils {
         } catch (Exception var11) {
           errors = "Failed to Execute XML request for get template.\n" + var11.toString();
           logger.info("Error: {}", errors);
+          properties.add("error", errors);
           return properties.build();
         }
         logger.info("response: {}", response);
@@ -109,6 +111,7 @@ public class Utils {
         } catch (Exception var10) {
           errors = "Failed to convert response to XML document.\n" + var10.toString();
           logger.info("Error: {}", errors);
+          properties.add("error", errors);
           return properties.build();
         }
 
@@ -388,6 +391,7 @@ public class Utils {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      properties.add("error", errors);
       return properties.build();
     }
     logger.info("response3: {}", response);
@@ -396,6 +400,7 @@ public class Utils {
     } catch (Exception var12) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var12.toString();
       var12.printStackTrace();
+      properties.add("error", errors);
       return properties.build();
     }
     logger.info("XMLResponseDoc: {}", documentToString(XMLResponseDoc));
@@ -417,6 +422,7 @@ public class Utils {
       response = executeXMLRequest(config, XMLResponseDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      properties.add("error", errors);
       return properties.build();
     }
 */
@@ -427,6 +433,7 @@ public class Utils {
     } catch (ParserConfigurationException var12) {
       errors = "Failed to create XML document for get template.\n" + var12.toString();
       logger.info("Error: {}", errors);
+      properties.add("error", errors);
       return properties.build();
     }
 
@@ -434,6 +441,7 @@ public class Utils {
       response = executeXMLRequest(config, node);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      properties.add("error", errors);
       return properties.build();
     }
 
