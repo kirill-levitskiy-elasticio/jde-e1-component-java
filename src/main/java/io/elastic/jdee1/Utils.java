@@ -410,10 +410,6 @@ public class Utils {
     session = getSessionIDFromXMLDocument(XMLResponseDoc);
     logger.info("Session: {}", session);
 
-    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-    Document doc = docBuilder.parse(documentToString(XMLResponseDoc));
-    addAttribute(doc, "session", session);
 /*
     Node nodeXpath = (Node) xPath.evaluate("//person[email='xyz@gmail.com']/name", doc, XPathConstants.NODE);
     nodeXpath.setTextContent("BatMan");
