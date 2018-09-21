@@ -363,7 +363,8 @@ public class Utils {
     errors = ret;
   }
 
-  public JsonObject jbExecute_actionPerformed(JsonObject config) {
+  public JsonObject jbExecute_actionPerformed(JsonObject config)
+      throws ParserConfigurationException, IOException, SAXException {
     errors = "";
 
     String ret;
@@ -404,19 +405,42 @@ public class Utils {
     session = getSessionIDFromXMLDocument(XMLResponseDoc);
     logger.info("Session: {}", session);
 
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    Document doc = docBuilder.parse(documentToString(XMLResponseDoc));
+    addAttribute(doc, "session", session);
+/*
+    Node nodeXpath = (Node) xPath.evaluate("//person[email='xyz@gmail.com']/name", doc, XPathConstants.NODE);
+    nodeXpath.setTextContent("BatMan");
+
+    try {
+      response = executeXMLRequest(config, XMLResponseDoc);
+    } catch (IOException var13) {
+      errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      return properties.build();
+    }
+*/
     Node node = null;
     try {
       node = createTemplateRequestXMLDocument(config);
-    } catch (ParserConfigurationException e) {
-      errors = "Failed to Execute XMLRequest for function call.\n" + e.toString();
-      e.printStackTrace();
+      logger.info("node7: {}", convertXMLDocumentToString(node));
+    } catch (ParserConfigurationException var12) {
+      errors = "Failed to create XML document for get template.\n" + var12.toString();
+      logger.info("Error: {}", errors);
       return properties.build();
     }
 
-    logger.info("node: ", node);
+    try {
+      response = executeXMLRequest(config, node);
+    } catch (IOException var13) {
+      errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
+      return properties.build();
+    }
+
+    logger.info("reponse7: {}", response);
 
     NodeList parms = XMLResponseDoc.getElementsByTagName("param");
-
+    node = null;
     for(int i = 0; i < parms.getLength(); ++i) {
       node = parms.item(i);
       NamedNodeMap attributes = node.getAttributes();
@@ -437,6 +461,8 @@ public class Utils {
         }
       }
     }
+
+    XMLResponseDoc.getElementsByTagName("jdeResponse");
 
     displayBSFNErrors(XMLResponseDoc);
 
@@ -535,6 +561,12 @@ public class Utils {
     } catch (Exception ex) {
       throw new RuntimeException("Error converting to String", ex);
     }
+  }
+
+  public void addAttribute(Document doc, String name, String value) {
+    Element root = doc.getDocumentElement();
+    Element person = (Element)root.getFirstChild();
+    person.setAttribute(name,value);
   }
 
 }
