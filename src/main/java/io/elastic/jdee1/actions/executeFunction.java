@@ -53,7 +53,7 @@ public class executeFunction implements Module {
         jdeinstance.getTemplate_actionPerformed(configuration);
 
         try {
-            result.add("result", jdeinstance.jbExecute_actionPerformed(configuration, body));
+            result.add("jdeResponse", jdeinstance.jbExecute_actionPerformed(configuration, body));
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
