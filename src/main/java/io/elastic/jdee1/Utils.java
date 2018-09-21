@@ -439,7 +439,7 @@ public class Utils {
           String type = "string";
           field.add("title", name)
               .add("type", type);
-          properties.add(name, field);
+          properties.add(name, textNode.getNodeValue());
 
         }
       }
