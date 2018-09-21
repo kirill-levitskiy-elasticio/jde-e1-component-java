@@ -403,10 +403,22 @@ public class Utils {
 
     session = getSessionIDFromXMLDocument(XMLResponseDoc);
     logger.info("Session: {}", session);
+
+    Node node = null;
+    try {
+      node = createTemplateRequestXMLDocument(config);
+    } catch (ParserConfigurationException e) {
+      errors = "Failed to Execute XMLRequest for function call.\n" + e.toString();
+      e.printStackTrace();
+      return properties.build();
+    }
+
+    logger.info("node: ", node);
+
     NodeList parms = XMLResponseDoc.getElementsByTagName("param");
 
     for(int i = 0; i < parms.getLength(); ++i) {
-      Node node = parms.item(i);
+      node = parms.item(i);
       NamedNodeMap attributes = node.getAttributes();
       Node x = attributes.getNamedItem("name");
       String parmname = x.getNodeValue();
