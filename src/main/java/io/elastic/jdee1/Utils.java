@@ -83,7 +83,7 @@ public class Utils {
         executed = true;
       } else {
         lastFunction = "";
-        //clearBSFNModel();
+        clearBSFNModel();
         errors = "";
         Node node = null;
         logger.info("config: {}", config.toString());
@@ -363,10 +363,13 @@ public class Utils {
     errors = ret;
   }
 
-  public String jbExecute_actionPerformed(JsonObject config) {
+  public JsonObject jbExecute_actionPerformed(JsonObject config) {
     errors = "";
 
     String ret;
+    JsonObjectBuilder properties = Json.createObjectBuilder();
+    JsonObjectBuilder field = Json.createObjectBuilder();
+
     for(int i = 0; i < BSFNParmsModel.getRowCount(); ++i) {
       ret = (String)BSFNParmsModel.getValueAt(i, 0);
       String value = (String)BSFNParmsModel.getValueAt(i, 1);
@@ -382,7 +385,7 @@ public class Utils {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
-      return errors;
+      return properties.build();
     }
     logger.info("response3: {}", response);
     try {
@@ -390,7 +393,7 @@ public class Utils {
     } catch (Exception var12) {
       errors = "Failed to Execute XMLRequest for function call.\n" + var12.toString();
       var12.printStackTrace();
-      return errors;
+      return properties.build();
     }
     logger.info("XMLResponseDoc: {}", documentToString(XMLResponseDoc));
     ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
@@ -410,13 +413,20 @@ public class Utils {
         int index = getParameterIndexByName(parmname);
         if (index != -1) {
           BSFNParmsModel.setValueAt(textNode.getNodeValue(), index, 2);
+
+          String name = x.getNodeValue();
+          String type = "string";
+          field.add("title", name)
+              .add("type", type);
+          properties.add(name, field);
+
         }
       }
     }
 
     displayBSFNErrors(XMLResponseDoc);
 
-    return documentToString(XMLResponseDoc);
+    return properties.build();
   }
 
   public void setParameterValue(String value, int index) {
@@ -431,18 +441,18 @@ public class Utils {
     if (textNode != null) {
       ((Node)textNode).setNodeValue(value);
     }
-
+    logger.info("textNode: {}", textNode);
+    logger.info("node: {}", node);
   }
 
   private void setCredentialsInXMLDocument(JsonObject config) {
-    logger.info("XML: {}", XMLDoc);
-    //NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
-    //Node request = requestlist.item(0);
+    NodeList requestlist = XMLDoc.getElementsByTagName("jdeRequest");
+    Node request = requestlist.item(0);
     final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
     final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
     final String environment = getRequiredNonEmptyString(config, CFG_ENV,
         "Environment is required");
-/*
+
     try {
       NamedNodeMap attributes = request.getAttributes();
       Node att = attributes.getNamedItem("user");
@@ -453,10 +463,11 @@ public class Utils {
       att.setNodeValue(environment);
       att = attributes.getNamedItem("session");
       att.setNodeValue(session);
+
+      logger.info("att: {}", att);
     } catch (Exception var6) {
       var6.printStackTrace();
     }
-*/
   }
 
   private int getParameterIndexByName(String parmname) {

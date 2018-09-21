@@ -56,8 +56,8 @@ public class executeFunction implements Module {
         Utils jdeinstance = new Utils();
 
         final JsonObjectBuilder result = Json.createObjectBuilder();
-        result.add("result1", jdeinstance.getTemplate_actionPerformed(configuration));
-        result.add("result2", jdeinstance.jbExecute_actionPerformed(configuration));
+        jdeinstance.getTemplate_actionPerformed(configuration);
+        result.add("result", jdeinstance.jbExecute_actionPerformed(configuration));
 
 
         logger.info("Emitting data");
