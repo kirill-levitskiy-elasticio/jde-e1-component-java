@@ -383,10 +383,10 @@ public class Utils {
         setParameterValue(value, i);
       }
     }
-    logger.info("config: {}", config.toString());
+    logger.info("jbExecute Config: {}", config.toString());
     setCredentialsInXMLDocument(config);
     String response = null;
-    logger.info("XMLDoc: {}", documentToString(XMLDoc));
+    logger.info("jbExecute Request: {}", documentToString(XMLDoc));
     try {
       response = executeXMLRequest(config, XMLDoc);
     } catch (IOException var13) {
@@ -394,7 +394,7 @@ public class Utils {
       properties.add("error", errors);
       return properties.build();
     }
-    logger.info("response3: {}", response);
+    logger.info("jbExecute Response: {}", documentToString(XMLResponseDoc));
     try {
       XMLResponseDoc = convertStringToXMLDocument(response);
     } catch (Exception var12) {
@@ -403,48 +403,14 @@ public class Utils {
       properties.add("error", errors);
       return properties.build();
     }
-    logger.info("XMLResponseDoc: {}", documentToString(XMLResponseDoc));
+
     ret = getReturnCodeFromXMLDocument(XMLResponseDoc);
     returnCode = ret;
 
     session = getSessionIDFromXMLDocument(XMLResponseDoc);
-    logger.info("Session: {}", session);
-
-/*
-    Node nodeXpath = (Node) xPath.evaluate("//person[email='xyz@gmail.com']/name", doc, XPathConstants.NODE);
-    nodeXpath.setTextContent("BatMan");
-
-    try {
-      response = executeXMLRequest(config, XMLResponseDoc);
-    } catch (IOException var13) {
-      errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
-      properties.add("error", errors);
-      return properties.build();
-    }
-*/
-    Node node = null;
-    try {
-      node = createTemplateRequestXMLDocument(config);
-      logger.info("node7: {}", convertXMLDocumentToString(node));
-    } catch (ParserConfigurationException var12) {
-      errors = "Failed to create XML document for get template.\n" + var12.toString();
-      logger.info("Error: {}", errors);
-      properties.add("error", errors);
-      return properties.build();
-    }
-
-    try {
-      response = executeXMLRequest(config, node);
-    } catch (IOException var13) {
-      errors = "Failed to Execute XMLRequest for function call.\n" + var13.toString();
-      properties.add("error", errors);
-      return properties.build();
-    }
-
-    logger.info("reponse7: {}", response);
 
     NodeList parms = XMLResponseDoc.getElementsByTagName("param");
-    node = null;
+    Node node = null;
     for(int i = 0; i < parms.getLength(); ++i) {
       node = parms.item(i);
       NamedNodeMap attributes = node.getAttributes();
@@ -485,8 +451,6 @@ public class Utils {
     if (textNode != null) {
       ((Node)textNode).setNodeValue(value);
     }
-    logger.info("textNode: {}", textNode);
-    logger.info("node: {}", node);
   }
 
   private void setCredentialsInXMLDocument(JsonObject config) {
@@ -507,8 +471,6 @@ public class Utils {
       att.setNodeValue(environment);
       att = attributes.getNamedItem("session");
       att.setNodeValue(session);
-
-      logger.info("att: {}", att);
     } catch (Exception var6) {
       var6.printStackTrace();
     }
