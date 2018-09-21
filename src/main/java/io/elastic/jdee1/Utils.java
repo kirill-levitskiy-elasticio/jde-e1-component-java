@@ -453,6 +453,7 @@ public class Utils {
   }
 
   public void setParameterValue(String key, String value) {
+    value = value.replaceAll("\"", "");
     NodeList parms = XMLDoc.getElementsByTagName("param");
     logger.info("XMLDoc: {}", convertXMLDocumentToString(XMLDoc));
     for (int i = 0, len = parms.getLength(); i < len; i++) {
