@@ -41,7 +41,7 @@ public class executeFunction implements Module {
         final JsonObjectBuilder result = Json.createObjectBuilder();
         //jdeinstance.getTemplate_actionPerformed(configuration);
         try {
-            jdeinstance.jbExecute_actionPerformed(configuration);
+            jdeinstance.jbExecute_actionPerformed(configuration, body);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class executeFunction implements Module {
         }
         jdeinstance.getTemplate_actionPerformed(configuration);
         try {
-            result.add("result", jdeinstance.jbExecute_actionPerformed(configuration));
+            result.add("result", jdeinstance.jbExecute_actionPerformed(configuration, body));
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {

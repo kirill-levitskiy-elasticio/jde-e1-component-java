@@ -6,9 +6,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -149,11 +151,9 @@ public class Utils {
     String request = convertXMLDocumentToString(node);
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
-    logger.info("Request: {}", request);
     XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
     //String response = createTemplateResponseXMLDocument(config);
     String response = xml.execute();
-    logger.info("Response: {}", response);
     return response;
   }
 
@@ -366,7 +366,7 @@ public class Utils {
     errors = ret;
   }
 
-  public JsonObject jbExecute_actionPerformed(JsonObject config)
+  public JsonObject jbExecute_actionPerformed(JsonObject config, JsonObject body)
       throws ParserConfigurationException, IOException, SAXException {
     errors = "";
 
@@ -375,7 +375,7 @@ public class Utils {
     JsonObjectBuilder field = Json.createObjectBuilder();
 
     getTemplate_actionPerformed(config);
-
+/*
     for(int i = 0; i < BSFNParmsModel.getRowCount(); ++i) {
       ret = (String)BSFNParmsModel.getValueAt(i, 0);
       String value = (String)BSFNParmsModel.getValueAt(i, 1);
@@ -383,6 +383,19 @@ public class Utils {
         setParameterValue(value, i);
       }
     }
+*/
+
+    StringBuilder keys = new StringBuilder();
+    StringBuilder values = new StringBuilder();
+    StringBuilder setString = new StringBuilder();
+    int indexParam = 0;
+
+    for (Map.Entry<String, JsonValue> entry : body.entrySet()) {
+      if (entry.getValue().toString().compareTo("") != 0) {
+        setParameterValue(entry.getValue().toString(), indexParam++);
+      }
+    }
+
     logger.info("jbExecute Config: {}", config.toString());
     setCredentialsInXMLDocument(config);
     String response = null;
