@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.text.MessageFormat;
 import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -78,7 +77,9 @@ public class Utils {
     JsonObjectBuilder field = Json.createObjectBuilder();
     executed = false;
     String response = "";
+    /* line below - constant should be replaced with dynamic config (uncomment and tested) */
     final String function = "AddressBookMasterMBF"; //getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
+
     logger.info("lastFunction: {}, function: {}", lastFunction, function);
     if (function.compareTo("") != 0) {
       if (function.compareTo(lastFunction) == 0) {
@@ -152,122 +153,8 @@ public class Utils {
     final String server = getRequiredNonEmptyString(config, CFG_SERVER, "Server is required");
     final String port = getRequiredNonEmptyString(config, CFG_PORT, "Port is required");
     XMLRequest xml = new XMLRequest(server, Integer.parseInt(port), request);
-    //String response = createTemplateResponseXMLDocument(config);
     String response = xml.execute();
     return response;
-  }
-
-  private String createTemplateResponseXMLDocument(final JsonObject config) {
-    Node node = null;
-    final String user = getRequiredNonEmptyString(config, CFG_USER, "User is required");
-    final String password = getRequiredNonEmptyString(config, CFG_PASSWORD, "Password is required");
-    final String environment = getRequiredNonEmptyString(config, CFG_ENV,
-        "Environment is required");
-    final String function = getRequiredNonEmptyString(config, CFG_FUNCTION, "Function is required");
-    return MessageFormat.format("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><jdeResponse comment=\"\" environment=\"{0}\" pwd=\"{1}\" role=\"*ALL\" session=\"3916.1534421300.6\" sessionidle=\"\" type=\"callmethod\" user=\"{2}\">\n"
-        + "\t<callMethod app=\"\" name=\"{3}\">\n"
-        + "\t\t<returnCode code=\"0\"/>\n"
-        + "\t\t<params>\n"
-        + "\t\t\t<param name=\"cActionCode\">I</param>\n"
-        + "\t\t\t<param name=\"mnAddressBookNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"szLongAddressNumber\">0011I00000UH3pUQAT</param>\n"
-        + "\t\t\t<param name=\"szTaxId\">SERVICEMAX</param>\n"
-        + "\t\t\t<param name=\"szSearchType\">C</param>\n"
-        + "\t\t\t<param name=\"szAlphaName\">Compugen</param>\n"
-        + "\t\t\t<param name=\"szSecondaryAlphaName\">                                        </param>\n"
-        + "\t\t\t<param name=\"szMailingName\">Compugen</param>\n"
-        + "\t\t\t<param name=\"szSecondaryMailingName\">                                        </param>\n"
-        + "\t\t\t<param name=\"szDescriptionCompressed\">COMPUGEN</param>\n"
-        + "\t\t\t<param name=\"szBusinessUnit\">         M30</param>\n"
-        + "\t\t\t<param name=\"szAddressLine1\">PO Box 2121 Compugen</param>\n"
-        + "\t\t\t<param name=\"szAddressLine2\">2018-06-13T14:33:30.000Z</param>\n"
-        + "\t\t\t<param name=\"szAddressLine3\">www.test.com</param>\n"
-        + "\t\t\t<param name=\"szAddressLine4\">Banking</param>\n"
-        + "\t\t\t<param name=\"szPostalCode\">10008</param>\n"
-        + "\t\t\t<param name=\"szCity\">New York</param>\n"
-        + "\t\t\t<param name=\"szCounty\">                         </param>\n"
-        + "\t\t\t<param name=\"szState\">NE</param>\n"
-        + "\t\t\t<param name=\"szCountry\">   </param>\n"
-        + "\t\t\t<param name=\"szPrefix1\">(212)</param>\n"
-        + "\t\t\t<param name=\"szPhoneNumber1\">247-1672</param>\n"
-        + "\t\t\t<param name=\"szPhoneNumberType1\">    </param>\n"
-        + "\t\t\t<param name=\"cPayablesYNM\">N</param>\n"
-        + "\t\t\t<param name=\"cReceivablesYN\">N</param>\n"
-        + "\t\t\t<param name=\"cEmployeeYN\">N</param>\n"
-        + "\t\t\t<param name=\"cUserCode\">N</param>\n"
-        + "\t\t\t<param name=\"cARAPNettingY\">N</param>\n"
-        + "\t\t\t<param name=\"cSubledgerInactiveCode\"> </param>\n"
-        + "\t\t\t<param name=\"cPersonCorporationCode\"> </param>\n"
-        + "\t\t\t<param name=\"szCertificate\">                    </param>\n"
-        + "\t\t\t<param name=\"szAddlIndTaxID\">                    </param>\n"
-        + "\t\t\t<param name=\"szCreditMessage\">  </param>\n"
-        + "\t\t\t<param name=\"szLanguage\">  </param>\n"
-        + "\t\t\t<param name=\"szIndustryClassification\">7000</param>\n"
-        + "\t\t\t<param name=\"cEMail\"> </param>\n"
-        + "\t\t\t<param name=\"mn1stAddressNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"mn2ndAddressNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"mn3rdAddressNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"mn4thAddressNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"mn5thAddressNumber\">202930</param>\n"
-        + "\t\t\t<param name=\"mnFactorSpecialPayee\">202930</param>\n"
-        + "\t\t\t<param name=\"cAddressType3YN\">N</param>\n"
-        + "\t\t\t<param name=\"cAddressType4YN\">N</param>\n"
-        + "\t\t\t<param name=\"cAddressType5YN\">N</param>\n"
-        + "\t\t\t<param name=\"szCategoryCode01\">   </param>\n"
-        + "\t\t\t<param name=\"szAccountRepresentative\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode03\">   </param>\n"
-        + "\t\t\t<param name=\"szGeographicRegion\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode05\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode06\">   </param>\n"
-        + "\t\t\t<param name=\"sz1099Reporting\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode08\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode09\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode10\">   </param>\n"
-        + "\t\t\t<param name=\"szSalesRegion\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode12\">   </param>\n"
-        + "\t\t\t<param name=\"szLineOfBusiness\">   </param>\n"
-        + "\t\t\t<param name=\"szSalesVolume\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode15\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode16\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode17\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode18\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode19\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode20\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode21\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode22\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode23\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode24\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode25\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode26\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode27\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode28\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode29\">   </param>\n"
-        + "\t\t\t<param name=\"szCategoryCode30\">   </param>\n"
-        + "\t\t\t<param name=\"szGlBankAccount\">        </param>\n"
-        + "\t\t\t<param name=\"cClearedY\"> </param>\n"
-        + "\t\t\t<param name=\"szRemark\">                              </param>\n"
-        + "\t\t\t<param name=\"szUserReservedCode\">  </param>\n"
-        + "\t\t\t<param name=\"mnUserReservedAmount\">.00</param>\n"
-        + "\t\t\t<param name=\"szUserReservedReference\">0011I00000UH3pU</param>\n"
-        + "\t\t\t<param name=\"szProgramId\">          </param>\n"
-        + "\t\t\t<param name=\"szRemark1\">                                        </param>\n"
-        + "\t\t\t<param name=\"cEdiSuccessfullyProcess\">0</param>\n"
-        + "\t\t\t<param name=\"szShortcutClientType\">  </param>\n"
-        + "\t\t\t<param name=\"szTicker\">          </param>\n"
-        + "\t\t\t<param name=\"szStockExchange\">          </param>\n"
-        + "\t\t\t<param name=\"szDUNSNumber\">             </param>\n"
-        + "\t\t\t<param name=\"szClassificationCode01\">   </param>\n"
-        + "\t\t\t<param name=\"szClassificationCode02\">   </param>\n"
-        + "\t\t\t<param name=\"szClassificationCode03\">   </param>\n"
-        + "\t\t\t<param name=\"szClassificationCode04\">   </param>\n"
-        + "\t\t\t<param name=\"szClassificationCode05\">   </param>\n"
-        + "\t\t\t<param name=\"szYearStarted\">               </param>\n"
-        + "\t\t\t<param name=\"szEmployeeGroupApprovals\">     </param>\n"
-        + "\t\t\t<param name=\"cIndicatorFlg\"> </param>\n"
-        + "\t\t\t<param name=\"szRevenueRange\">C</param>\n"
-        + "\t\t</params>\n"
-        + "\t</callMethod>\n"
-        + "</jdeResponse>", environment, password, user, function);
   }
 
   private Node createTemplateRequestXMLDocument(final JsonObject config)
@@ -375,15 +262,6 @@ public class Utils {
     JsonObjectBuilder field = Json.createObjectBuilder();
 
     getTemplate_actionPerformed(config);
-/*
-    for(int i = 0; i < BSFNParmsModel.getRowCount(); ++i) {
-      ret = (String)BSFNParmsModel.getValueAt(i, 0);
-      String value = (String)BSFNParmsModel.getValueAt(i, 1);
-      if (value.compareTo("") != 0) {
-        setParameterValue(value, i);
-      }
-    }
-*/
 
     StringBuilder keys = new StringBuilder();
     StringBuilder values = new StringBuilder();

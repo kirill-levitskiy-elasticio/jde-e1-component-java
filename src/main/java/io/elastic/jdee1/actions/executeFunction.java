@@ -14,60 +14,61 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
- * Action to create a pet.
+ * Action to execute jde function
  */
 public class executeFunction implements Module {
-    private static final Logger logger = LoggerFactory.getLogger(executeFunction.class);
 
-    /**
-     * Executes the actions's logic by sending a request to the Petstore API and emitting response to the platform.
-     *
-     * @param parameters execution parameters
-     */
-    @Override
-    public void execute(final ExecutionParameters parameters) {
-        logger.info("About to get functions list");
-        // incoming message
-        final Message message = parameters.getMessage();
+  private static final Logger logger = LoggerFactory.getLogger(executeFunction.class);
 
-        // body contains the mapped data
-        final JsonObject body = message.getBody();
+  /**
+   * Executes the actions's logic by sending a request and emitting response to the platform.
+   *
+   * @param parameters execution parameters
+   */
+  @Override
+  public void execute(final ExecutionParameters parameters) {
+    logger.info("About to get functions list");
+    // incoming message
+    final Message message = parameters.getMessage();
 
-        // contains action's configuration
-        final JsonObject configuration = parameters.getConfiguration();
+    // body contains the mapped data
+    final JsonObject body = message.getBody();
 
-        Utils jdeinstance = new Utils();
+    // contains action's configuration
+    final JsonObject configuration = parameters.getConfiguration();
 
-        final JsonObjectBuilder result = Json.createObjectBuilder();
+    Utils jdeinstance = new Utils();
 
-        try {
-            jdeinstance.jbExecute_actionPerformed(configuration, body);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
+    final JsonObjectBuilder result = Json.createObjectBuilder();
 
-        jdeinstance.getTemplate_actionPerformed(configuration);
-
-        try {
-            result.add("jdeResponse", jdeinstance.jbExecute_actionPerformed(configuration, body));
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-
-        logger.info("Emitting data");
-
-        final Message data
-            = new Message.Builder().body(result.build()).build();
-
-        // emitting the message to the platform
-        parameters.getEventEmitter().emitData(data);
+    try {
+      jdeinstance.jbExecute_actionPerformed(configuration, body);
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (SAXException e) {
+      e.printStackTrace();
     }
+
+    jdeinstance.getTemplate_actionPerformed(configuration);
+
+    try {
+      result.add("jdeResponse", jdeinstance.jbExecute_actionPerformed(configuration, body));
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (SAXException e) {
+      e.printStackTrace();
+    }
+
+    logger.info("Emitting data");
+
+    final Message data
+        = new Message.Builder().body(result.build()).build();
+
+    // emitting the message to the platform
+    parameters.getEventEmitter().emitData(data);
+  }
 }
